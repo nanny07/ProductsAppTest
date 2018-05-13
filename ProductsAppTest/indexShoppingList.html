@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Shopping List</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h1>Shopping List Single Page App</h1>
+    </div>
+
+    <div>
+        <h2>Existing Shopping List</h2>
+        <ul id="shoppingList" />
+    </div>
+
+    <div>
+        <h2>Create New Shopping List</h2>
+    </div>
+    <div>
+        <input type="text" id="newShoppingListName" />
+        <button>CREATE</button>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var uri = 'api/ShoppingListsEF';
+
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(uri)
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatShoppingList(item) }).appendTo($('#shoppingList'));
+                    });
+                });
+        });
+
+        function formatShoppingList(shoppingList) {
+            return shoppingList.Name + ': ' + shoppingList.Items.length + ' items';
+        }
+    </script>
+</body>
+</html>
